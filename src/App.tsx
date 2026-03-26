@@ -1,16 +1,17 @@
-import { useEffect } from "react"
-import { getMarkets } from "./services/api"
+import { useMarket } from "./hook/useMarket"
+import type { Market } from "./types/Market"
 
 function App() {
-  useEffect(() => {
-    getMarkets()
-      .then(data => console.log(data))
-      .catch(err => console.log(err))
-  })
+  const { data, isLoading, isError } = useMarket()
+
+  if (isLoading) return <div>carregando...</div>
+  if (isError) return <div>Error ao carregar</div>
 
   return (
     <div>
-
+      {data?.map((market: Market) => (
+        <div key={market.id}>{market.question}</div>
+      ))}
     </div>
   )
 }

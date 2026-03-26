@@ -1,13 +1,17 @@
-import type { Market } from "../types/market";
+import type { Market } from "../types/Market";
+import axios from "axios";
 
-const BASE_URL = 'api/'
+const api = axios.create({
+  baseURL: '/api'
+})
 
 export async function getMarkets(): Promise<Market[]> {
-  const response = await fetch(`${BASE_URL}/markets?limit=20&order=volume24hr&ascending=false`)
-
-  if (!response.ok) {
-    throw new Error('Error 404')
-  }
-
-  return response.json()
+  const { data } = await api.get<Market[]>('/markets', {
+    params: {
+      limit: 20,
+      order: 'volume24hr',
+      ascending: false
+    }
+  })
+  return data
 }
