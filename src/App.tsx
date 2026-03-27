@@ -1,5 +1,5 @@
 import { useMarket } from "./hook/useMarket"
-import type { Market } from "./types/Market"
+import { MarketCard } from "./components/MarketCard"
 
 function App() {
   const { data, isLoading, isError } = useMarket()
@@ -9,8 +9,8 @@ function App() {
 
   return (
     <div>
-      {data?.map((market: Market) => (
-        <div key={market.id}>{market.question}</div>
+      {data?.map((market) => (
+        <MarketCard key={market.id} market={market} />
       ))}
     </div>
   )
